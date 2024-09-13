@@ -44,6 +44,6 @@ namespace Entity
 	struct eulerAngles //for both cam and feetpos
 	{
 		float Yaw {};
-		float Pitch {};
+		float Pitch{};
 	};
 }

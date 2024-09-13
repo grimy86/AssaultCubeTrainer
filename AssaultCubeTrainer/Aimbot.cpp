@@ -60,21 +60,21 @@ namespace Aimbot
 
 		//Yaw angles
 		Entity::eulerAngles aimAngles{};
-		if (aimVector.x >= 0.0f && aimVector.y >= 0.0f)
+		if (aimVector.x >= 0.0f && aimVector.y < 0.0f) // +x, -y
 		{
-			aimAngles.Yaw = radiansToDegrees(atanf(aimVector.x / aimVector.y));
+			aimAngles.Yaw = radiansToDegrees(atanf(aimVector.x / -aimVector.y));
 		}
-		else if (aimVector.x >= 0.0f && aimVector.y < 0.0f)
+		else if (aimVector.x >= 0.0f && aimVector.y >= 0.0f) // +x, +y
 		{
-			aimAngles.Yaw = radiansToDegrees(atanf(-aimVector.y / aimVector.x)) + 90.0f;
+			aimAngles.Yaw = radiansToDegrees(atanf(aimVector.y /aimVector.x)) + 90.0f;
 		}
-		else if (aimVector.x < 0.0f && aimVector.y < 0.0f)
+		else if (aimVector.x < 0.0f && aimVector.y >= 0.0f) // -x, +y
 		{
-			aimAngles.Yaw = radiansToDegrees(atanf(-aimVector.x / -aimVector.y)) + 180.0f;
+			aimAngles.Yaw = radiansToDegrees(atanf(-aimVector.x / aimVector.y)) + 180.0f;
 		}
-		else
+		else // -x, -y
 		{
-			aimAngles.Yaw = radiansToDegrees(atanf(aimVector.y / -aimVector.x)) + 270.0f;
+			aimAngles.Yaw = radiansToDegrees(atanf(-aimVector.y / -aimVector.x)) + 270.0f;
 		}
 		
 		//Pitch angles
