@@ -53,9 +53,9 @@ namespace Aimbot
 		//Get "grey" vector = destination - source
 		Entity::vector3D aimVector
 		{
-			enemy.x - player.x,
-			enemy.y - player.y,
-			enemy.z - player.z
+			enemy.x - player.x, //distance between x postions
+			enemy.y - player.y, //distance between y positions
+			enemy.z - player.z //distance between z positions
 		};
 
 		//Yaw angles
