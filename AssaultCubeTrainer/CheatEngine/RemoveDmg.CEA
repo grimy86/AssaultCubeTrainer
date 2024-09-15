@@ -1,21 +1,22 @@
 [Enable]
 alloc(newmem,2048)
-label(originalcode)
 label(returnhere)
+label(originalcode)
 label(exit)
 
 newmem: //this is allocated memory, you have read,write,execute access
+//place your code here
 
-cmp [ebx+30C] 1 //ebx = localplayer +30c= teamflag
-jne originalcode //if team isn't 1 resume originalcode
-add [ebx+04], 1
-jmp originalcode+5 //jump to after the mov
+cmp [ebx+224], 0       // ebx = localplayer +30C = teamflag
+jne originalcode            //if team isn't 0 resume originalcode
+add [ebx+4], esi           // if team is 0, increase health
+mov eax, esi                //
+jmp exit                    //jump to the exit
 
 
 originalcode:
-sub [ebx+04],esi  //3Bytes
-mov eax,esi      //2Bytes
-
+sub [ebx+04],esi
+mov eax,esi
 
 exit:
 jmp returnhere
