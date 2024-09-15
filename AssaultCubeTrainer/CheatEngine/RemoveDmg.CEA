@@ -1,0 +1,32 @@
+[Enable]
+alloc(newmem,2048)
+label(originalcode)
+label(returnhere)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+cmp [ebx+30C] 1 //ebx = localplayer +30c= teamflag
+jne originalcode //if team isn't 1 resume originalcode
+add [ebx+04], 1
+jmp originalcode+5 //jump to after the mov
+
+
+originalcode:
+sub [ebx+04],esi  //3Bytes
+mov eax,esi      //2Bytes
+
+
+exit:
+jmp returnhere
+
+"ac_client.exe"+1C223:
+jmp newmem
+returnhere:
+
+[Disable]
+dealloc(newmem)
+"ac_client.exe"+1C223:
+db 29 73 04 8B C6
+//sub [ebx+04],esi
+//mov eax,esi
