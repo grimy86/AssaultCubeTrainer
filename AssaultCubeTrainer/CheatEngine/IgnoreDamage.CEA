@@ -1,0 +1,35 @@
+[Enable]
+alloc(newmem,2048)
+label(returnhere)
+label(originalcode)
+label(exit)
+
+newmem: //this is allocated memory, you have read,write,execute access
+
+sub ebx, E8
+cmp ebx, [ac_client.exe+18AC00]       //compare edi to localplayer
+jne originalcode                      //if edi isn't localplayer, originalcode
+add ebx, E8
+sub [ebx+04], #0                      //else, sub by #0
+mov eax, 0
+jmp exit                              //deallocate this memory
+
+
+originalcode:
+add ebx, E8
+sub [ebx+04],esi
+mov eax,esi
+
+exit:
+jmp returnhere
+
+"ac_client.exe"+1C223:
+jmp newmem
+returnhere:
+
+[Disable]
+dealloc(newmem)
+"ac_client.exe"+1C223:
+db 29 73 04 8B C6
+//sub [ebx+04],esi
+//mov eax,esi
