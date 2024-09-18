@@ -18,10 +18,10 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Utility.cpp">
+    <ClCompile Include="Aimbot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Aimbot.cpp">
+    <ClCompile Include="ExtProc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,10 +29,10 @@
     <ClInclude Include="Offsets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Utility.h">
+    <ClInclude Include="Aimbot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Aimbot.h">
+    <ClInclude Include="ExtProc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
