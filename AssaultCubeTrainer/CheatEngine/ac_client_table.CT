@@ -825,6 +825,99 @@ db 88 45 5D 32 C0
         </CheatEntry>
       </CheatEntries>
     </CheatEntry>
+    <CheatEntry>
+      <ID>133</ID>
+      <Description>"Experimental"</Description>
+      <Options moManualExpandCollapse="1"/>
+      <Color>FF00FF</Color>
+      <GroupHeader>1</GroupHeader>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>124</ID>
+          <Description>"sa1"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+17E254</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>125</ID>
+          <Description>"sa2"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+17E360</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>126</ID>
+          <Description>"sa3"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+18AC00</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>127</ID>
+          <Description>"sa4"</Description>
+          <ShowAsHex>1</ShowAsHex>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+195404</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>129</ID>
+          <Description>"ptr1"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+17E254</Address>
+          <Offsets>
+            <Offset>0</Offset>
+            <Offset>14</Offset>
+            <Offset>374</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>130</ID>
+          <Description>"ptr2"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+17E360</Address>
+          <Offsets>
+            <Offset>0</Offset>
+            <Offset>14</Offset>
+            <Offset>374</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>131</ID>
+          <Description>"ptr3"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+18AC00</Address>
+          <Offsets>
+            <Offset>0</Offset>
+            <Offset>14</Offset>
+            <Offset>374</Offset>
+          </Offsets>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>132</ID>
+          <Description>"ptr4"</Description>
+          <ShowAsSigned>0</ShowAsSigned>
+          <Color>FF8080</Color>
+          <VariableType>4 Bytes</VariableType>
+          <Address>ac_client.exe+195404</Address>
+          <Offsets>
+            <Offset>0</Offset>
+            <Offset>14</Offset>
+            <Offset>374</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
   </CheatEntries>
   <CheatCodes>
     <CodeEntry>
@@ -2742,4 +2835,11 @@ db 88 45 5D 32 C0
       </Elements>
     </Structure>
   </Structures>
+  <DisassemblerComments>
+    <DisassemblerComment>
+      <Address>"ac_client.exe"+C73EF</Address>
+      <Comment>dec value in address pointed to by esi
+</Comment>
+    </DisassemblerComment>
+  </DisassemblerComments>
 </CheatTable>
