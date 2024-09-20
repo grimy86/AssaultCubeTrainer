@@ -1,10 +1,11 @@
 #pragma once
 #include <Windows.h>
 #include "Offsets.h"
+#include "ExtProc.h"
 
 namespace Aimbot
 {
-	void DoAimbot(DWORD moduleBaseAddress, HANDLE processHandle);
+	void DoAimbot(ExtProc& extProc, DWORD moduleBaseAddress);
 	float CalcAngleBetweenVectors(Entity::vector3D vector1, Entity::vector3D vector2);
 	Entity::vector3D ViewToVec(Entity::eulerAngles viewAngles);
 	Entity::eulerAngles VecToView(Entity::vector3D aimVector);

@@ -36,7 +36,7 @@ int main()
 
     while (!(GetAsyncKeyState(VK_NUMLOCK) & 0b1))
     {
-        Aimbot::DoAimbot(moduleBaseAddr, processHandle);
+        Aimbot::DoAimbot(assaultCube, assaultCube.GetModuleBaseAddress("ac_client.exe"));
     }
     CloseHandle(processHandle);
 

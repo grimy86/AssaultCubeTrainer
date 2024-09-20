@@ -1,51 +1,56 @@
-#include <math.h>
 #include "Aimbot.h"
-#include "ExtProc.h"
+#include <math.h>
+#include <iostream>
 
 namespace Aimbot
 {
-	void DoAimbot(ExtProc& extProc)
+	void DoAimbot(ExtProc& extProc, DWORD moduleBaseAddress)
 	{
 		if (GetAsyncKeyState(VK_RBUTTON) & 0x8000) // most significant bit for 2-byte value
 		{
-			DWORD localPlayerPtr{};
-			if (!ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(moduleBaseAddress + Offsets::localPlayerPtr4), &localPlayerPtr, sizeof(localPlayerPtr), nullptr) || !localPlayerPtr)
-			{
-				return;
-			}
-			int health{};
-			if (!ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(localPlayerPtr + Offsets::healthOffset), &health, sizeof(health), nullptr) || health <= 0)
-			{
-				return;
-			}
-			DWORD entityListPtr{};
-			if (!ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(moduleBaseAddress + Offsets::entityList), &entityListPtr, sizeof(entityListPtr), nullptr) || !entityListPtr)
-			{
-				return;
-			}
-			DWORD entityAddress{};
-			if (!ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(entityListPtr + 0x0C), &entityAddress, sizeof(entityAddress), nullptr) || !entityAddress)
-			{
-				return;
-			}
-			int entityHealth{};
-			if (!ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(entityAddress + Offsets::healthOffset), &entityHealth, sizeof(entityHealth), nullptr) || entityHealth <= 0)
-			{
-				return;
-			}
-			Entity::vector3D playerPosition{};
-			if (!ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(localPlayerPtr + Offsets::camVector), &playerPosition, sizeof(playerPosition), nullptr))
-			{
-				return;
-			}
-			Entity::vector3D entityPosition{};
-			if (!ReadProcessMemory(processHandle, reinterpret_cast<LPCVOID>(entityAddress + Offsets::camVector), &entityPosition, sizeof(entityPosition), nullptr))
+			DWORD localPlayerPtr{ extProc.RPM<DWORD>(moduleBaseAddress + Offsets::localPlayerPtr4) };
+
+			if (!localPlayerPtr)
 			{
 				return;
 			}
 
-			Entity::eulerAngles aimAngles{ calcAngle(playerPosition, entityPosition) };
-			WriteProcessMemory(processHandle, reinterpret_cast<LPVOID>(localPlayerPtr + Offsets::viewAngles), &aimAngles, sizeof(aimAngles), nullptr);
+			int health{ extProc.RPM<int>(localPlayerPtr + Offsets::healthOffset) };
+			if (health <= 0)
+			{
+				return;
+			}
+
+			DWORD entityListPtr{ extProc.RPM<DWORD>(moduleBaseAddress + Offsets::entityList) };
+			if (!entityListPtr)
+			{
+				return;
+			}
+
+			DWORD entityAddress{ extProc.RPM<DWORD>(entityListPtr + 0x04) };
+			if (!entityAddress)
+			{
+				return;
+			}
+
+			int entityHealth{ extProc.RPM<int>(entityAddress + Offsets::healthOffset) };
+			if (entityHealth <= 0)
+			{
+				return;
+			}
+
+			Entity::vector3D playerPosition{ extProc.RPM<Entity::vector3D>(localPlayerPtr + Offsets::camVector) };
+			Entity::vector3D entityPosition{ extProc.RPM<Entity::vector3D>(entityAddress + Offsets::camVector) };
+			Entity::vector3D aimVector{ VecSubtraction(entityPosition, playerPosition) }; //destination - source
+			Entity::eulerAngles playerViewAngles{ extProc.RPM<Entity::eulerAngles>(localPlayerPtr + Offsets::viewAngles) };
+			Entity::vector3D viewVector{ ViewToVec(playerViewAngles) };
+			float fieldOfView{ CalcAngleBetweenVectors(aimVector, viewVector) };
+			std::cout << "FOV:" << fieldOfView << '\n';
+
+			if (fieldOfView < 5.0f)
+			{
+				extProc.WPM<Entity::eulerAngles>(localPlayerPtr + Offsets::viewAngles, VecToView(aimVector));
+			}
 		}
 	}
 
@@ -134,6 +139,8 @@ namespace Aimbot
 			vector1.y - vector2.y, //distance between y positions
 			vector1.z - vector2.z //distance between z positions
 		};
+
+		return vectorBetweenPoints;
 	}
 
 	float RadiansToDegrees(float rad)
@@ -157,10 +164,7 @@ namespace Aimbot
 	}
 #pragma endregion
 
-
-	
-
-	bool IsTeamGame(const DWORD& gameMode)
+	/*bool IsTeamGame(const DWORD& gameMode)
 	{
 		if (!gameMode)
 		{
@@ -171,4 +175,5 @@ namespace Aimbot
 			gameMode == 14 || gameMode == 16 || gameMode == 17 || gameMode == 20 || gameMode == 21) return true;
 		else return false;
 	}
+	*/
 }

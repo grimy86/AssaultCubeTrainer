@@ -32,7 +32,7 @@
 #pragma endregion
 #pragma region Templates
 		template <typename T>
-		T ReadProcessMemory(const uintptr_t readAddress) const
+		T RPM(const uintptr_t readAddress) const
 		{
 			T returnValue{};
 
@@ -43,10 +43,12 @@
 				sizeof(returnValue),
 				nullptr
 			);
+
+			return returnValue;
 		}
 
 		template <typename T>
-		bool WriteProcessMemory(const uintptr_t writeAddress, const T& writeValue) const
+		bool WPM(const uintptr_t writeAddress, const T& writeValue) const
 		{
 			return static_cast<bool>(WriteProcessMemory(
 				_processHandle,
