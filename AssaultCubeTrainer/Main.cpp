@@ -1,12 +1,18 @@
 #include <iostream>
 #include "Offsets.h"
-#include "Utility.h"
+#include "ExtProc.h"
+#include "MemUtils.h"
 #include "Aimbot.h"
 
 
 int main()
 {
-    DWORD processId{ Utility::GetProcessId(L"ac_client.exe") };
+    ExtProc assaultCube{"ac_client.exe"};
+
+    DWORD processId{ assaultCube.GetProcessId() }; //assaultCube::GetProcessId("ac_client.exe")
+    DWORD moduleBaseAddr{ assaultCube.GetModuleBaseAddress("ac_client.exe")}; //assaultCube::GetModuleBaseAddress("ac_client.exe")
+    HANDLE processHandle{ OpenProcess(PROCESS_ALL_ACCESS, FALSE, processId) };
+
     if (processId == 0)
     {
         std::cout << "(!)  Couldn't resolve a valid processId." << '\n';
@@ -14,7 +20,6 @@ int main()
     }
     std::cout << "(+)  Resolved a valid processId: " << processId << '\n';
 
-    DWORD moduleBaseAddr{ Utility::GetModuleBaseAddress(L"ac_client.exe", processId) };
     if (moduleBaseAddr == 0)
     {
         std::cout << "(!)  Couldn't resolve a valid moduleBaseAddress." << '\n';
@@ -22,8 +27,7 @@ int main()
     }
     std::cout << std::hex << "(+)  Resolved a valid moduleBaseAddress: 0x" << moduleBaseAddr << '\n';
 
-    HANDLE processHandle{ OpenProcess(PROCESS_ALL_ACCESS, FALSE, processId) };
-    if (!Utility::IsValidHandle(processHandle))
+    if (!MemUtils::IsValidHandle(processHandle))
     {
         std::cout << "(!)  Couldn't open a handle to the process." << '\n';
         return 1;
