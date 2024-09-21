@@ -21,7 +21,7 @@ namespace Aimbot
 				return;
 			}
 
-			DWORD entityListPtr{ extProc.RPM<DWORD>(moduleBaseAddress + Offsets::entityList) };
+			DWORD entityListPtr{ extProc.RPM<DWORD>(moduleBaseAddress + Offsets::entityListPtr) };
 			if (!entityListPtr)
 			{
 				return;
